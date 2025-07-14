@@ -598,7 +598,8 @@ Para propagar as modificações:
 
 :::details[Pseudocódigo]
 
-Envio de pedido de **leitura** (*query*) do cliente para a réplica:
+Envio de pedido de **leitura** (_query_) do cliente para a réplica:
+
 ```php
 On sending of Query request q from p_i
   q.prev := p_i.prev;
@@ -622,7 +623,8 @@ Procedure apply_query()
   send new to p_j;         // send response to the client
 ```
 
-Envio de pedido de **modificação** (*update*) do cliente para a réplica:
+Envio de pedido de **modificação** (_update_) do cliente para a réplica:
+
 ```php
 On sending of Update request u from p_i
   u.id := get_unique_id();
@@ -643,7 +645,7 @@ On receipt of Update request u from p_j at replica r_i
   record := <i, new, u.op, u.prev, u.id>;
   r_i.update_log.add(record);
   send new to p_j; // send updated timestamp back to client
-  
+
   if (u.prev <= r_i.valueTS) then   // check if replica is up-to-date
     apply_update();
   else
@@ -660,6 +662,7 @@ Procedure apply_update()
 ```
 
 Troca de mensagens de **gossip** entre réplicas:
+
 ```php
 On sending of gossip message g from replica r_i
   g.log := r_i.update_log; // full log or estimate of unseen entries
@@ -690,7 +693,8 @@ On receipt of gossip message g at replica r_i
   notify of this gossip;
 ```
 
-Operação de **merge** entre *vector timestamps*:
+Operação de **merge** entre _vector timestamps_:
+
 ```php
 Procedure merge(currentTS, targetTS)
   for i := 1 to N do
